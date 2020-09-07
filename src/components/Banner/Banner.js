@@ -23,19 +23,17 @@ function Banner({ fetchUrl }) {
                 backgroundImage: `url(
                     https://image.tmdb.org/t/p/original/${movie?.backdrop_path}
                 )`,
-                backgroundPosition: "center center"
+                backgroundPosition: "center top"
             }}>
             <div className="banner__contents">
-                {/* Title */}
                 <h1 className="banner__title">{movie?.title || movie?.name || movie?.original_name}</h1>
                 <div className="banner__buttons">
                     <button className="banner__button">Play</button>
                     <button className="banner__button">My List</button>
                 </div>
-                {/* div -> 2*buttons */}
-                {/* Description */}
                 <h1 className="banner__description">{truncate(movie?.overview, 150)}</h1>
             </div>
+            <div className="banner__fade-bottom"/>
         </header>
     )
 }
