@@ -1,0 +1,31 @@
+.row__poster{
+    object-fit: contain;
+    width: 100%;
+    max-height: 100px;
+    margin-right: 10px;
+    transition: transform 450ms;
+}
+
+.row__poster:hover{
+    transform: scale(1.08);
+    opacity: 1;
+}
+
+.row__posterLarge{
+    max-height: 250px;
+}
+
+.modal {
+    width: 50vw;
+    height: 50vh;
+    transform: translate(50%, 50%);
+}
+.movie {
+    color: orange;
+    background-color: royalblue;
+    cursor: pointer;
+}
+.youtubeIframe {
+    width: 100%;
+    height: 100%;
+}
