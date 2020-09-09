@@ -49,7 +49,7 @@ function RowItem({ movie, isLargeRow, titleId }) {
             <img
                 className={`row__poster ${isLargeRow && "row__posterLarge"}`}
                 key={titleId}
-                src={`${baseURL}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
+                src={`${baseURL}${movie.poster_path}`}
                 alt={movie.name || movie.title}
                 onClick={handleOpen}
             />

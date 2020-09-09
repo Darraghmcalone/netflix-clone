@@ -1,7 +1,7 @@
 .row__poster{
     object-fit: contain;
     width: 100%;
-    max-height: 100px;
+    max-height: 200px;
     margin-right: 10px;
     transition: transform 450ms;
 }
@@ -12,7 +12,8 @@
 }
 
 .row__posterLarge{
-    max-height: 250px;
+    max-height: 270px;
+    margin-right: 12px;
 }
 
 .modal {
@@ -21,7 +22,6 @@
     transform: translate(50%, 50%);
 }
 .movie {
-    color: orange;
     background-color: royalblue;
     cursor: pointer;
 }
