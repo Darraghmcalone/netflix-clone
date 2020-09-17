@@ -23,7 +23,7 @@ function Banner({ fetchUrl }) {
                 backgroundImage: `url(
                     https://image.tmdb.org/t/p/original/${movie?.backdrop_path}
                 )`,
-                backgroundPosition: "center top"
+                backgroundPosition: "center"
             }}>
             <div className="banner__contents">
                 <h1 className="banner__title">{movie?.title || movie?.name || movie?.original_name}</h1>
