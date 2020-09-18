@@ -4,6 +4,7 @@ import './Banner.css'
 
 function Banner({ fetchUrl }) {
     const [movie, setMovie] = useState([])
+
     useEffect(() => {
         async function fetchData() {
             const request = await axios.get(fetchUrl)
@@ -13,9 +14,11 @@ function Banner({ fetchUrl }) {
         }
         fetchData()
     }, [fetchUrl])
+
     const truncate = (str, n) => {
         return str?.length > n ? str.substr(0, n - 1) + '...' : str;
     };
+
     return (
         <header className="banner"
             style={{
@@ -33,7 +36,7 @@ function Banner({ fetchUrl }) {
                 </div>
                 <h1 className="banner__description">{truncate(movie?.overview, 150)}</h1>
             </div>
-            <div className="banner__fade-bottom"/>
+            <div className="banner__fade-bottom" />
         </header>
     )
 }

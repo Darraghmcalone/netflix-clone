@@ -44,6 +44,8 @@ function RowItem({ movie, isLargeRow, titleId }) {
             .then(candidateVideos => setVideos(assignYoutubeTrailer(candidateVideos)));
     }, [titleId]);
 
+    console.log(movie)
+
     return (
         <>
             <img

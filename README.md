@@ -4,7 +4,7 @@
 
 Netflix Clone is an application built with React and using Firebase to deploy the app. It utilizes the themoviedb.org API, displays Movies from different categories and plays movie trailers. 
 
-This project is live: https://netflix-clone-80c9f.web.app/ .
+This project is live: https://netflix-clone-ef3ca.web.app .
 
 # Technologies
 
