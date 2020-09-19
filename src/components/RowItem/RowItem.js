@@ -1,33 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { getVideosFromMovie } from '../../axios';
+import assignYoutubeTrailer from './services/assignYoutubeTrailer'
+import axios from '../../api/axios'
+import requests from '../../api/requests';
 import Modal from '@material-ui/core/Modal';
 import './RowItem.css'
 
 const baseURL = "https://image.tmdb.org/t/p/original/";
 
-const assignYoutubeTrailer = (videos) => {
-    const YOUTUBE_URLBASE = 'https://www.youtube.com/embed/';
-
-    if (videos.length === 0) {
-        return '';
-    }
-
-    const validVideos = videos.filter(video => video.site.toLowerCase() === 'youtube');
-    const trailers = validVideos.filter(video => video.type.toLowerCase() === 'trailer');
-    const teasers = validVideos.filter(video => video.type.toLowerCase() === 'teaser');
-
-    if (trailers.length !== 0) {
-        return YOUTUBE_URLBASE + trailers[0].key;
-    }
-
-    if (teasers.length !== 0) {
-        return YOUTUBE_URLBASE + teasers[0].key;
-    }
-
-    return '';
-};
-
-function RowItem({ movie, isLargeRow, titleId }) {
+function RowItem({ movie, isLargeRow, titleId, mediaType }) {
     const [videos, setVideos] = useState('');
     const [open, setOpen] = useState(false);
 
@@ -40,11 +20,13 @@ function RowItem({ movie, isLargeRow, titleId }) {
     };
 
     useEffect(() => {
-        getVideosFromMovie(titleId)
-            .then(candidateVideos => setVideos(assignYoutubeTrailer(candidateVideos)));
-    }, [titleId]);
-
-    console.log(movie)
+        async function fetchVideos() {
+            const request = await axios.get(`/${mediaType}/${titleId}/${requests.fetchVideos}`)
+            setVideos(assignYoutubeTrailer(request.data.results))
+            return request
+        }
+        fetchVideos()
+    }, [mediaType, titleId]);
 
     return (
         <>
