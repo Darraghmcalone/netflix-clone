@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="app">
       <Nav />
-      <Banner fetchUrl={requests.fetchNetflixOriginals} />
+      <Banner fetchUrl={requests.fetchNetflixOriginals} mediaType='tv'/>
       <Row title="Netflix Originals" fetchUrl={requests.fetchNetflixOriginals} isLargeRow mediaType='tv' />
       <Row title="Trending now" fetchUrl={requests.fetchTrending} mediaType='movie' />
       <Row title="Top Rated" fetchUrl={requests.fetchTopRated} mediaType='movie' />
