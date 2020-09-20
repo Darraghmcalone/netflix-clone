@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import assignYoutubeTrailer from './services/assignYoutubeTrailer'
-import axios from '../../api/axios'
-import requests from '../../api/requests';
+import React, { useState } from 'react'
+import useFetchVideos from '../../hooks/useFetchVideos'
 import Modal from '@material-ui/core/Modal';
 import './RowItem.css'
 
 const baseURL = "https://image.tmdb.org/t/p/original/";
 
 function RowItem({ movie, isLargeRow, titleId, mediaType }) {
-    const [videos, setVideos] = useState('');
+    const videos = useFetchVideos({ mediaType, titleId })
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -18,15 +16,6 @@ function RowItem({ movie, isLargeRow, titleId, mediaType }) {
     const handleClose = () => {
         setOpen(false);
     };
-
-    useEffect(() => {
-        async function fetchVideos() {
-            const request = await axios.get(`/${mediaType}/${titleId}/${requests.fetchVideos}`)
-            setVideos(assignYoutubeTrailer(request.data.results))
-            return request
-        }
-        fetchVideos()
-    }, [mediaType, titleId]);
 
     return (
         <>
