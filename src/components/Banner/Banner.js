@@ -9,19 +9,21 @@ function Banner({ fetchUrl, mediaType }) {
     const [movie, setMovie] = useState([])
     const { open, handleOpen, handleClose } = useModal()
 
-    const titleId = movie?.id 
-
-    const videos = useFetchVideos({ mediaType, titleId })
-
     useEffect(() => {
         async function fetchData() {
-            const request = await axios.get(fetchUrl).catch((error) => console.log(error))
-            const { results } = request.data;
-            setMovie(results[Math.floor(Math.random() * results.length - 1)])
+            const request = await axios.get(fetchUrl)
+            const { results } = request?.data;
+            if (typeof (results) !== undefined && typeof (results) !== undefined) {
+                setMovie(results[Math.floor(Math.random() * results.length - 1)])
+            }
             return request
         }
         fetchData()
     }, [fetchUrl])
+
+    const titleId = movie?.id || 81354
+
+    const videos = useFetchVideos({ mediaType, titleId })
 
     const truncate = (str, n) => {
         return str?.length > n ? str.substr(0, n - 1) + '...' : str;
@@ -32,7 +34,7 @@ function Banner({ fetchUrl, mediaType }) {
             style={{
                 backgroundSize: "cover",
                 backgroundImage: `url(
-                    https://image.tmdb.org/t/p/original/${movie?.backdrop_path}
+                    https://image.tmdb.org/t/p/original/${movie?.backdrop_path || '/uZKqLBIZcjaB5NEpFr4umT8ezoW.jpg'}
                 )`,
                 backgroundPosition: "center"
             }}>
