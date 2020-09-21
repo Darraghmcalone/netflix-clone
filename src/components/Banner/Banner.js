@@ -45,7 +45,7 @@ function Banner({ fetchUrl, mediaType }) {
                 <h1 className="banner__description">{truncate(movie?.overview, 150)}</h1>
             </div>
             <div className="banner__fade-bottom" />
-            <ModalDetails videos={videos} open={open} handleClose={handleClose} />
+            {videos && <ModalDetails videos={videos} open={open} handleClose={handleClose} />}
         </header>
     )
 }

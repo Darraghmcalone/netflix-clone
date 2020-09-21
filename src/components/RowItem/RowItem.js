@@ -1,22 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import useFetchVideos from '../../hooks/useFetchVideos'
-import Modal from '@material-ui/core/Modal';
+import useModal from '../../hooks/useModal';
+import ModalDetails from '../Modal/ModalDetails'
 import './RowItem.css'
 
 const baseURL = "https://image.tmdb.org/t/p/original/";
 
 function RowItem({ movie, isLargeRow, titleId, mediaType }) {
     const videos = useFetchVideos({ mediaType, titleId })
-    const [open, setOpen] = useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
+    const { open, handleOpen, handleClose } = useModal()
     return (
         <>
             <img
@@ -26,23 +18,7 @@ function RowItem({ movie, isLargeRow, titleId, mediaType }) {
                 alt={movie.name || movie.title}
                 onClick={handleOpen}
             />
-            {videos &&
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                >
-                    <div className="modal">
-                        <iframe
-                            src={videos}
-                            className="youtubeIframe"
-                            frameBorder="0"
-                            allow="autoplay; encrypted-media"
-                            allowFullScreen
-                            title="video"
-                        />
-                    </div>
-                </Modal>
-            }
+            {videos && <ModalDetails videos={videos} open={open} handleClose={handleClose} />}
         </>
     )
 }
