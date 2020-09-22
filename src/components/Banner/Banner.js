@@ -1,40 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import ModalDetails from '../Modal/ModalDetails'
 import useModal from '../../hooks/useModal';
-import useFetchVideos from '../../hooks/useFetchVideos';
-import axios from '../../api/axios'
+import useFetch from '../../hooks/useFetch';
+import requests from '../../api/requests';
+import assignYoutubeTrailer from '../../helper/assignYoutubeTrailer';
 import './Banner.css'
 
 function Banner({ fetchUrl, mediaType }) {
     const [movie, setMovie] = useState([])
     const { open, handleOpen, handleClose } = useModal()
+    const [videos, setVideos] = useState([]);
+
+    const { response: bannerRes, isLoading: isBannerLoading } = useFetch({
+        method: "get",
+        url: `${fetchUrl}`,
+    });
+
+    const { response: videoRes, isLoading: isVidLoading } = useFetch({
+        method: "get",
+        url: `/${mediaType}/${movie?.id}/${requests.fetchVideos}`,
+    });
 
     useEffect(() => {
-        async function fetchData() {
-            const request = await axios.get(fetchUrl)
-            const { results } = request?.data;
-            if (typeof (results) !== undefined && typeof (results) !== undefined) {
-                setMovie(results[Math.floor(Math.random() * results.length - 1)])
-            }
-            return request
+        if (bannerRes !== null) {
+            const { results } = bannerRes;
+            setMovie(results[Math.floor(Math.random() * results.length - 1)])
         }
-        fetchData()
-    }, [fetchUrl])
+    }, [bannerRes]);
 
-    const titleId = movie?.id || 81354
+    useEffect(() => {
+        if (videoRes !== null) {
+            setVideos(assignYoutubeTrailer(videoRes.results));
+        }
+    }, [videoRes]);
 
-    const videos = useFetchVideos({ mediaType, titleId })
+    const truncate = (str, n) => str?.length > n ? str.substr(0, n - 1) + '...' : str;
 
-    const truncate = (str, n) => {
-        return str?.length > n ? str.substr(0, n - 1) + '...' : str;
-    };
+    if (isVidLoading || isBannerLoading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <header className="banner"
             style={{
                 backgroundSize: "cover",
                 backgroundImage: `url(
-                    https://image.tmdb.org/t/p/original/${movie?.backdrop_path || '/uZKqLBIZcjaB5NEpFr4umT8ezoW.jpg'}
+                    https://image.tmdb.org/t/p/original/${movie?.backdrop_path}
                 )`,
                 backgroundPosition: "center"
             }}>
