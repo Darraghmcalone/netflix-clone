@@ -2,43 +2,25 @@ import React, { useState, useEffect } from 'react';
 import ModalDetails from '../Modal/ModalDetails'
 import useModal from '../../hooks/useModal';
 import useFetch from '../../hooks/useFetch';
-import requests from '../../api/requests';
-import assignYoutubeTrailer from '../../helper/assignYoutubeTrailer';
 import './Banner.css'
 
 function Banner({ fetchUrl, mediaType }) {
     const [movie, setMovie] = useState([])
     const { open, handleOpen, handleClose } = useModal()
-    const [videos, setVideos] = useState([]);
 
-    const { response: bannerRes, isLoading: isBannerLoading } = useFetch({
+    const { response } = useFetch({
         method: "get",
         url: `${fetchUrl}`,
     });
 
-    const { response: videoRes, isLoading: isVidLoading } = useFetch({
-        method: "get",
-        url: `/${mediaType}/${movie?.id}/${requests.fetchVideos}`,
-    });
-
     useEffect(() => {
-        if (bannerRes !== null) {
-            const { results } = bannerRes;
+        if (response !== null) {
+            const { results } = response;
             setMovie(results[Math.floor(Math.random() * results.length - 1)])
         }
-    }, [bannerRes]);
-
-    useEffect(() => {
-        if (videoRes !== null) {
-            setVideos(assignYoutubeTrailer(videoRes.results));
-        }
-    }, [videoRes]);
+    }, [response]);
 
     const truncate = (str, n) => str?.length > n ? str.substr(0, n - 1) + '...' : str;
-
-    if (isVidLoading || isBannerLoading) {
-        return <p>Loading...</p>;
-    }
 
     return (
         <header className="banner"
@@ -58,7 +40,7 @@ function Banner({ fetchUrl, mediaType }) {
                 <h1 className="banner__description">{truncate(movie?.overview, 150)}</h1>
             </div>
             <div className="banner__fade-bottom" />
-            {videos && <ModalDetails videos={videos} open={open} handleClose={handleClose} />}
+            {movie?.id && <ModalDetails open={open} handleClose={handleClose} mediaType={mediaType} titleId={movie?.id} />}
         </header>
     )
 }
