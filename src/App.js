@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Row from './components/Row/Row';
-import requests from './api/requests';
+import requests from '../src/api/requests';
 import Banner from './components/Banner/Banner';
 import Nav from './components/Nav/Nav';
 import { Typography } from '@material-ui/core';
