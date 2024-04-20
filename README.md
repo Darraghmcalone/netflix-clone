@@ -4,7 +4,7 @@
 
 Netflix Clone is an application built with React and using Firebase to deploy the app. It utilizes the themoviedb.org API, displays Movies from different categories and plays movie trailers. 
 
-This project is live: https://6351f502386d021be91d3339--darling-semifreddo-db72c8.netlify.app/ .
+This project is live: https://master--darling-semifreddo-db72c8.netlify.app/ .
 
 # Technologies
 
